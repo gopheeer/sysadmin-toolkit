@@ -1,6 +1,6 @@
 # 🚀 Ultimate Modern DevOps & SysAdmin Toolkit
 
-A curated collection of modern, fast, and user-friendly CLI tools to replace legacy UNIX utilities. Optimized for Ubuntu/Debian environments, this setup dramatically enhances workflows across **Software Development, Systems Administration, and Network Engineering**.
+A curated collection of modern, fast, and user-friendly CLI tools to replace legacy UNIX utilities. Optimized for Ubuntu/Debian environments (**Bash/Zsh**), this setup dramatically enhances workflows across **Software Development, Systems Administration, and Network Engineering**.
 
 ---
 
@@ -19,8 +19,9 @@ sudo snap install dust procs trippy lazydocker
 cargo install doggo bandwhich
 export PATH="$HOME/.cargo/bin:$PATH"
 
-# 4. Inject Smart Tool Cross-Integrations and Aliases into Profile
-cat << 'EOF' >> ~/.bashrc
+# 4. Inject Smart Tool Cross-Integrations and Aliases into Profiles
+# This block appends the configuration to both .bashrc and .zshrc if they exist.
+INSTALL_BLOCK=$(cat << 'EOF'
 
 # ==============================================================================
 # 🔥 MODERN CLI REPLACEMENTS & INTERACTIVE ALIASES
@@ -61,9 +62,17 @@ alias dock-inspect='container=$(docker ps --format "{{.Names}} ({{.Image}})" | f
 # Direct-to-IP DNS resolution filter.
 alias resolve-ips='function _resolve() { doggo "$1" --json | jq -r ".responses[].answers[].address" | grep -v "null"; }; _resolve'
 EOF
+)
+
+for rc in "$HOME/.bashrc" "$HOME/.zshrc"; do
+    if [ -f "$rc" ]; then
+        echo "$INSTALL_BLOCK" >> "$rc"
+    fi
+done
 
 # 5. Refresh running shell session
-source ~/.bashrc
+[ -n "$BASH_VERSION" ] && [ -f ~/.bashrc ] && source ~/.bashrc
+[ -n "$ZSH_VERSION" ] && [ -f ~/.zshrc ] && source ~/.zshrc
 echo "🎉 Toolkit installation and alias compilation completed successfully!"
 ```
 
@@ -153,12 +162,17 @@ cargo uninstall doggo bandwhich
 sudo apt purge -y ripgrep fd-find fzf bat htop httpie jq yq tldr git-delta cargo
 sudo apt autoremove -y
 
-# 4. Strip the configuration injector block out of .bashrc
-sed -i '/# ==============================================================================/,/# ==============================================================================/d' ~/.bashrc
-sed -i '/# 🔥 MODERN CLI REPLACEMENTS & INTERACTIVE ALIASES/,/alias resolve-ips.*/d' ~/.bashrc
+# 4. Strip the configuration injector block out of shell profiles
+for rc in "$HOME/.bashrc" "$HOME/.zshrc"; do
+    if [ -f "$rc" ]; then
+        sed -i '/# ==============================================================================/,/# ==============================================================================/d' "$rc"
+        sed -i '/# 🔥 MODERN CLI REPLACEMENTS & INTERACTIVE ALIASES/,/alias resolve-ips.*/d' "$rc"
+    fi
+done
 
 # 5. Reload shell profile
-source ~/.bashrc
+[ -n "$BASH_VERSION" ] && [ -f ~/.bashrc ] && source ~/.bashrc
+[ -n "$ZSH_VERSION" ] && [ -f ~/.zshrc ] && source ~/.zshrc
 echo "🧹 Environment has been rolled back to factory defaults."
 ```
 
