@@ -28,7 +28,7 @@ The project serves as a central repository for setup instructions, tool recommen
 - **Shells:** Bash and Zsh (configurations target `~/.bashrc` and `~/.zshrc`).
 - **Core Arsenal:** 
     - **Search:** `ripgrep`, `fd-find`, `fzf`, `zoxide`.
-    - **File/System:** `bat`, `dust`, `htop`, `bottom`, `procs`, `fastfetch`.
+    - **File/System:** `bat`, `dust`, `htop`, `bottom`, `procs`, `fastfetch`, `micro`, `helix`.
     - **Infra/Docker:** `lazydocker`, `dive`, `lazygit`.
     - **Network:** `httpie`, `xh`, `trippy`, `doggo`, `bandwhich`.
     - **Data/Sec:** `jq`, `yq`, `tldr`, `git-delta`, `age`, `zellij`.

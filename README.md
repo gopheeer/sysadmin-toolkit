@@ -21,10 +21,11 @@ Run the following block in your terminal to update your repositories, install al
 # 1. System Package Updates & Core Tool Installation
 sudo apt update && sudo apt install -y \
     ripgrep fd-find fzf bat htop httpie jq yq tldr git-delta cargo snapd \
-    zoxide age fastfetch
+    zoxide age fastfetch micro
 
 # 2. Advanced Diagnostic & Container Tools (Snaps)
 sudo snap install dust procs trippy lazydocker bottom lazygit
+sudo snap install helix --classic
 
 # 3. Network Architecture & Workspace Utilities (Cargo)
 cargo install doggo bandwhich zellij xh
@@ -49,10 +50,10 @@ alias grep="rg"
 
 # --- 🔍 Code Search & File Traversal ---
 # Find any file with a live syntax-highlighted preview. Press Enter to edit.
-alias fe='file=$(fd --type f --hidden --exclude .git | fzf --preview "batcat --color=always --style=numbers {}") && [ -n "$file" ] && ${EDITOR:-nano} "$file"'
+alias fe='file=$(fd --type f --hidden --exclude .git | fzf --preview "batcat --color=always --style=numbers {}") && [ -n "$file" ] && ${EDITOR:-micro} "$file"'
 
 # Fuzzy search text strings across your project with a code window preview.
-alias rgf='rg --line-number --no-heading --color=always --smart-case "" | fzf --ansi --delimiter : --preview "batcat --color=always --highlight-line {2} {1}" --preview-window=up:60% | awk -F: "{print \"+\" \$2 \" \" \$1}" | xargs -r ${EDITOR:-nano}'
+alias rgf='rg --line-number --no-heading --color=always --smart-case "" | fzf --ansi --delimiter : --preview "batcat --color=always --highlight-line {2} {1}" --preview-window=up:60% | awk -F: "{print \"+\" \$2 \" \" \$1}" | xargs -r ${EDITOR:-micro}'
 
 # --- 📂 Git & Version Control ---
 # Interactive git history viewer with side-by-side syntax-highlighted diffs.
@@ -90,6 +91,8 @@ arsenal() {
         "htop / bottom (btm) | Monitoring    | Graphical, keyboard-interactive system and process monitors."
         "procs               | Monitoring    | Human-readable ps replacement with thread hierarchy tracing."
         "fastfetch           | Monitoring    | Fast, active system information and specs dashboard dashboard."
+        "micro               | Editors       | Modern and intuitive terminal-based text editor (nano replacement)."
+        "helix (hx)          | Editors       | A post-modern modal text editor with built-in LSP support."
         "lazydocker          | Docker/Infra  | Interactive keyboard/mouse TUI dashboard for container clusters."
         "dive                | Docker/Infra  | Layer-by-layer docker image analyzer to find file bloat."
         "httpie (http)       | Network/API   | Unquoted user-friendly curl alternative with pretty JSON styling."
@@ -158,6 +161,8 @@ Once installed, simply type `arsenal` in your terminal to open the interactive t
 | :--- | :--- | :--- |
 | `cat` | **`bat`** | On-the-fly programming language syntax highlighting and git-change gutters. |
 | `du` | **`dust`** | Instant graphical, colorized visualization of directory sizes. |
+| `nano` / `vim` | **`micro`** | Intuitive, mouse-supported editor with familiar keybindings (Ctrl-S, Ctrl-C). |
+| `vim` / `neovim` | **`helix` (`hx`)** | Post-modern modal editor with batteries-included LSP and tree-sitter. |
 
 ### ⚙️ System Monitoring & Containers
 
@@ -214,13 +219,13 @@ If you ever need to clean a machine and completely remove these packages, config
 
 ```bash
 # 1. Remove Snap applications
-sudo snap remove dust procs trippy lazydocker bottom lazygit
+sudo snap remove dust procs trippy lazydocker bottom lazygit helix
 
 # 2. Remove Cargo utilities
 cargo uninstall doggo bandwhich zellij xh
 
 # 3. Purge system packages
-sudo apt purge -y ripgrep fd-find fzf bat htop httpie jq yq tldr git-delta cargo zoxide age fastfetch
+sudo apt purge -y ripgrep fd-find fzf bat htop httpie jq yq tldr git-delta cargo zoxide age fastfetch micro
 sudo apt autoremove -y
 
 # 4. Strip the configuration injector block out of shell profiles
