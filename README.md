@@ -61,8 +61,46 @@ alias dock-inspect='container=$(docker ps --format "{{.Names}} ({{.Image}})" | f
 # --- 🌐 Networking & Diagnostics ---
 # Direct-to-IP DNS resolution filter.
 alias resolve-ips='function _resolve() { doggo "$1" --json | jq -r ".responses[].answers[].address" | grep -v "null"; }; _resolve'
+
+# ==============================================================================
+# 🧰 CLI ARSENAL INTERACTIVE CHEATSHEET
+# ==============================================================================
+arsenal() {
+    local matrix=(
+        "ripgrep (rg)        | Search & Nav  | Faster grep replacement. Respects .gitignore by default."
+        "fd                  | Search & Nav  | Simpler, multi-threaded alternative to complex find commands."
+        "fzf                 | Search & Nav  | General-purpose interactive fuzzy finder for streams and files."
+        "zoxide (z)          | Search & Nav  | Smart cd replacement that remembers frequent folders."
+        "bat                 | File Viewer   | Upgraded cat with language syntax highlighting and git gutters."
+        "dust                | File Viewer   | Visual, color-coded recursive disk usage space tree."
+        "htop / bottom (btm) | Monitoring    | Graphical, keyboard-interactive system and process monitors."
+        "procs               | Monitoring    | Human-readable ps replacement with thread hierarchy tracing."
+        "fastfetch           | Monitoring    | Fast, active system information and specs dashboard dashboard."
+        "lazydocker          | Docker/Infra  | Interactive keyboard/mouse TUI dashboard for container clusters."
+        "dive                | Docker/Infra  | Layer-by-layer docker image analyzer to find file bloat."
+        "httpie (http)       | Network/API   | Unquoted user-friendly curl alternative with pretty JSON styling."
+        "xh                  | Network/API   | Blazing fast Rust clone of httpie with zero startup latency."
+        "trippy (trip)       | Network/API   | Combined interactive ping and traceroute diagnostic UI suite."
+        "doggo               | Network/API   | Modern DNS client (dig alternate) with native DoH/DoT and JSON."
+        "bandwhich           | Network/API   | Real-time terminal utility tracking bandwidth down to specific PIDs."
+        "jq / yq             | Data Stream   | Ultra-powerful processors to slice, filter, and rewrite JSON/YAML."
+        "delta               | Data Stream   | Renders crisp side-by-side git diff code modifications."
+        "tldr                | Data Stream   | Quick, real-world example cheat sheets replacing long man pages."
+        "zellij              | Workspace     | Feature-rich terminal multiplexer (tmux replacement) with no config."
+        "lazygit             | Workspace     | Visual terminal UI for staging code, merging, and git branch trees."
+        "age                 | Security      | Simple, modern file encryption tool replacing complex GPG keys."
+        "--- WORKFLOW COMBINATIONS ---"
+        "fe                  | Custom Combo  | Interactive File Opener (fd + fzf + bat + nano/vim)"
+        "rgf                 | Custom Combo  | Interactive Code Grepper (ripgrep + fzf + bat + nano/vim)"
+        "glf                 | Custom Combo  | Interactive Git Log Viewer (git + delta + fzf)"
+        "pkill-ui            | Custom Combo  | Interactive Process Killer Menu (procs + fzf)"
+        "clean-files         | Custom Combo  | Mass Deletion Safety Grid Panel (fd + fzf + rm)"
+        "dock-inspect        | Custom Combo  | Instant Docker Container Inspection Filter (docker + fzf + jq + bat)"
+        "resolve-ips         | Custom Combo  | Direct IP DNS Resolution Quick Filter (doggo + jq)"
+    )
+    print -l "${matrix[@]}" | fzf --header "🧰 DEV/SYSADMIN TOOLKIT ARSENAL (Type to filter, Esc to exit)" --header-lines=0 --ansi --delimiter "\|" --with-nth=1,2 --preview "echo -e \"\n\x1b[1;36m🔧 Tool / Context:\x1b[0m {1}\n\x1b[1;33m📁 Category:\x1b[0m {2}\n\x1b[1;32m💡 When to use:\x1b[0m {3}\n\"" --preview-window=right:50%:wrap
+}
 EOF
-)
 
 for rc in "$HOME/.bashrc" "$HOME/.zshrc"; do
     if [ -f "$rc" ]; then
