@@ -4,27 +4,38 @@ A curated collection of modern, fast, and user-friendly CLI tools to replace leg
 
 ---
 
+## 📖 Table of Contents
+- [⚡ Automated Quick-Install](#-automated-quick-install)
+- [🧰 The Arsenal Command](#-the-arsenal-command)
+- [🛠️ Tool Index & Cheat Sheet](#️-tool-index--cheat-sheet)
+- [🔑 New Laptop Quick-Start](#-new-laptop-quick-start-github-ssh-key-setup)
+- [🧹 Automated Rollback](#-automated-rollback-uninstall-script)
+
+---
+
 ## ⚡ Automated Quick-Install
 
 Run the following block in your terminal to update your repositories, install all tools, map the interactive configurations, and load the new profile.
 
 ```bash
 # 1. System Package Updates & Core Tool Installation
-sudo apt update && sudo apt install -y ripgrep fd-find fzf bat htop httpie jq yq tldr git-delta cargo snapd
+sudo apt update && sudo apt install -y \
+    ripgrep fd-find fzf bat htop httpie jq yq tldr git-delta cargo snapd \
+    zoxide age fastfetch
 
 # 2. Advanced Diagnostic & Container Tools (Snaps)
-sudo snap install dust procs trippy lazydocker
+sudo snap install dust procs trippy lazydocker bottom lazygit
 
-# 3. Network Architecture & DNS Utilities (Cargo)
-cargo install doggo bandwhich
+# 3. Network Architecture & Workspace Utilities (Cargo)
+cargo install doggo bandwhich zellij xh
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # 4. Inject Smart Tool Cross-Integrations and Aliases into Profiles
-# This block appends the configuration to both .bashrc and .zshrc if they exist.
+# This block appends the configuration to both .bashrc and .zshrc if they exist, with idempotency check.
 INSTALL_BLOCK=$(cat << 'EOF'
 
 # ==============================================================================
-# 🔥 MODERN CLI REPLACEMENTS & INTERACTIVE ALIASES
+# 🔥 MODERN CLI REPLACEMENTS & INTERACTIVE ALIASES (MANAGED BY TOOLKIT)
 # ==============================================================================
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -62,6 +73,9 @@ alias dock-inspect='container=$(docker ps --format "{{.Names}} ({{.Image}})" | f
 # Direct-to-IP DNS resolution filter.
 alias resolve-ips='function _resolve() { doggo "$1" --json | jq -r ".responses[].answers[].address" | grep -v "null"; }; _resolve'
 
+# --- 🚀 Zoxide (Smart CD) ---
+eval "$(zoxide init ${SHELL##*/})"
+
 # ==============================================================================
 # 🧰 CLI ARSENAL INTERACTIVE CHEATSHEET
 # ==============================================================================
@@ -98,13 +112,18 @@ arsenal() {
         "dock-inspect        | Custom Combo  | Instant Docker Container Inspection Filter (docker + fzf + jq + bat)"
         "resolve-ips         | Custom Combo  | Direct IP DNS Resolution Quick Filter (doggo + jq)"
     )
-    print -l "${matrix[@]}" | fzf --header "🧰 DEV/SYSADMIN TOOLKIT ARSENAL (Type to filter, Esc to exit)" --header-lines=0 --ansi --delimiter "\|" --with-nth=1,2 --preview "echo -e \"\n\x1b[1;36m🔧 Tool / Context:\x1b[0m {1}\n\x1b[1;33m📁 Category:\x1b[0m {2}\n\x1b[1;32m💡 When to use:\x1b[0m {3}\n\"" --preview-window=right:50%:wrap
+    printf "%s\n" "${matrix[@]}" | fzf --header "🧰 DEV/SYSADMIN TOOLKIT ARSENAL (Type to filter, Esc to exit)" --header-lines=0 --ansi --delimiter "\|" --with-nth=1,2 --preview "echo -e \"\n\x1b[1;36m🔧 Tool / Context:\x1b[0m {1}\n\x1b[1;33m📁 Category:\x1b[0m {2}\n\x1b[1;32m💡 When to use:\x1b[0m {3}\n\"" --preview-window=right:50%:wrap
 }
 EOF
+)
 
 for rc in "$HOME/.bashrc" "$HOME/.zshrc"; do
     if [ -f "$rc" ]; then
-        echo "$INSTALL_BLOCK" >> "$rc"
+        if ! grep -q "MANAGED BY TOOLKIT" "$rc"; then
+            echo "$INSTALL_BLOCK" >> "$rc"
+        else
+            echo "Skipping injection for $rc: Configuration block already exists."
+        fi
     fi
 done
 
@@ -116,19 +135,24 @@ echo "🎉 Toolkit installation and alias compilation completed successfully!"
 
 ---
 
+## 🧰 The Arsenal Command
+
+Once installed, simply type `arsenal` in your terminal to open the interactive toolkit guide. Use arrows or type to search, and view usage tips in the preview panel.
+
+---
+
 ## 🛠️ Tool Index & Cheat Sheet
 
 ### 🔍 Search & Navigation
-
 
 | Legacy Tool | Modern Equivalent | Key Advantage |
 | :--- | :--- | :--- |
 | `grep` | **`ripgrep` (`rg`)** | Orders of magnitude faster; honors `.gitignore` rules by default. |
 | `find` | **`fd`** | Intuitive pattern syntax; multi-threaded parallel execution. |
+| `cd` | **`zoxide` (`z`)** | Smart cd that remembers your most used directories. |
 | *None* | **`fzf`** | General-purpose command-line fuzzy finder for streams, files, and histories. |
 
 ### 📂 File Management & Viewing
-
 
 | Legacy Tool | Modern Equivalent | Key Advantage |
 | :--- | :--- | :--- |
@@ -137,32 +161,31 @@ echo "🎉 Toolkit installation and alias compilation completed successfully!"
 
 ### ⚙️ System Monitoring & Containers
 
-
 | Legacy Tool | Modern Equivalent | Key Advantage |
 | :--- | :--- | :--- |
 | `top` | **`htop` / `bottom`** | Colorful, keyboard-interactive task and process graphs. |
 | `ps` | **`procs`** | Multi-colored columns with automated thread hierarchy tracking. |
+| *None* | **`fastfetch`** | Ultra-fast system info fetch tool with high customizability. |
 | `docker` | **`lazydocker`** | Fully mouse-and-keyboard UI dashboard for container clusters and log tracking. |
 | *None* | **`dive`** | Layer-by-layer file overhead analyzer for cleaning up docker images. |
 
 ### 🌐 Network & API Utilities
 
-
 | Legacy Tool | Modern Equivalent | Key Advantage |
 | :--- | :--- | :--- |
-| `curl` | **`httpie`** | Clean, unquoted HTTP structural syntax and automatically indented JSON outputs. |
+| `curl` | **`httpie` / `xh`** | Clean, unquoted HTTP syntax and pretty-printed JSON outputs. |
 | `traceroute` | **`trippy`** | Interactive path mapping engine with automated node latency histograms. |
-| `dig` | **`doggo`** | Modern DNS utility natively supporting DoH/DoT transport protocols and JSON formats. |
+| `dig` | **`doggo`** | Modern DNS utility supporting DoH/DoT transport protocols and JSON formats. |
 | `iftop` | **`bandwhich`** | Maps network consumption tables directly back to active Process PIDs. |
 
 ### 📋 Code Helpers & Data Streams
-
 
 | Legacy Tool | Modern Equivalent | Key Advantage |
 | :--- | :--- | :--- |
 | `sed` / `awk` | **`jq` / `yq`** | Specialized processing engines built to slice, filter, and rewrite JSON/YAML streams. |
 | `git diff` | **`delta`** | Renders crisp side-by-side modifications with granular character highlights. |
 | `man` | **`tldr`** | Drops bloated instructional textbooks for immediate, practical command examples. |
+| *None* | **`zellij`** | A terminal workspace with "batteries included" (layout, tabs, etc.) |
 
 ---
 
@@ -191,20 +214,19 @@ If you ever need to clean a machine and completely remove these packages, config
 
 ```bash
 # 1. Remove Snap applications
-sudo snap remove dust procs trippy lazydocker
+sudo snap remove dust procs trippy lazydocker bottom lazygit
 
 # 2. Remove Cargo utilities
-cargo uninstall doggo bandwhich
+cargo uninstall doggo bandwhich zellij xh
 
 # 3. Purge system packages
-sudo apt purge -y ripgrep fd-find fzf bat htop httpie jq yq tldr git-delta cargo
+sudo apt purge -y ripgrep fd-find fzf bat htop httpie jq yq tldr git-delta cargo zoxide age fastfetch
 sudo apt autoremove -y
 
 # 4. Strip the configuration injector block out of shell profiles
 for rc in "$HOME/.bashrc" "$HOME/.zshrc"; do
     if [ -f "$rc" ]; then
         sed -i '/# ==============================================================================/,/# ==============================================================================/d' "$rc"
-        sed -i '/# 🔥 MODERN CLI REPLACEMENTS & INTERACTIVE ALIASES/,/alias resolve-ips.*/d' "$rc"
     fi
 done
 
