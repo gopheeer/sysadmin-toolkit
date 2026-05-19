@@ -39,6 +39,8 @@ INSTALL_BLOCK=$(cat << 'EOF'
 # 🔥 MODERN CLI REPLACEMENTS & INTERACTIVE ALIASES (MANAGED BY TOOLKIT)
 # ==============================================================================
 export PATH="$HOME/.cargo/bin:$PATH"
+export EDITOR="micro"
+export VISUAL="micro"
 
 # --- Basic Command Overrides ---
 alias fd="fdfind"

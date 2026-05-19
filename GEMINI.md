@@ -10,7 +10,7 @@ The project serves as a central repository for setup instructions, tool recommen
 
 - **Automated Quick-Install:** A multi-step script for installing tools via `apt`, `snap`, and `cargo`. It includes idempotency checks to prevent duplicate configuration injections.
 - **The Arsenal Command:** An interactive, `fzf`-powered cheatsheet (`arsenal`) for exploring the toolkit's capabilities.
-- **Bash & Zsh Aliases & Integrations:** A comprehensive set of aliases (e.g., `rg` for `grep`, `fd` for `find`, `bat` for `cat`) and custom functions injected into `~/.bashrc` and `~/.zshrc`.
+- **Bash & Zsh Aliases & Integrations:** A comprehensive set of aliases (e.g., `rg` for `grep`, `fd` for `find`, `bat` for `cat`) and custom functions injected into `~/.bashrc` and `~/.zshrc`. This includes setting `micro` as the default `EDITOR` and `VISUAL` environment variables.
 - **Tool Index:** A categorized mapping of legacy tools to their modern equivalents.
 - **Maintenance & Rollback:** Scripts for SSH key generation and complete system environment rollback.
 
