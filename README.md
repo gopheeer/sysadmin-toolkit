@@ -136,6 +136,8 @@ toolkit() {
 💡 Shortcuts: Ctrl-S: Search | Ctrl-F: File/View | Ctrl-M: Monitor | Ctrl-N: Network | Ctrl-W: Workflows | Ctrl-R: Reset" \
         --header-lines=0 \
         --ansi \
+        --layout=reverse \
+        --no-sort \
         --delimiter "\|" \
         --with-nth=1 \
         --bind "ctrl-s:change-query(Search),ctrl-f:change-query(File/View),ctrl-m:change-query(Monitor),ctrl-n:change-query(Network),ctrl-w:change-query(Workflow),ctrl-r:change-query()" \
