@@ -192,6 +192,7 @@ toolkit() {
         " \
         --preview-window=right:50%:wrap
 }
+alias arsenal='toolkit'
 EOF
 )
 
