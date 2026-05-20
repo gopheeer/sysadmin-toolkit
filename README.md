@@ -84,45 +84,45 @@ eval "$(zoxide init ${SHELL##*/})"
 # ==============================================================================
 arsenal() {
     local matrix=(
-        $'\e[1;95m─── 🔍 SEARCH & NAVIGATION ─────────────────────────────────────\e[0m | SECTION-SEARCH | | '
+        $'\e[1;95m─── 🔍 Search & Navigation ─────────────────────────────────────\e[0m | SECTION-SEARCH | | '
         $'\e[36mSearch\e[0m      │ ripgrep (rg)         | Search & Nav | Faster grep replacement. Respects .gitignore. | rg \'pat\'; rg -i \'pat\'; rg -t py \'pat\''
         $'\e[36mSearch\e[0m      │ fd                   | Search & Nav | Simpler, multi-threaded alternative to find.    | fd pat; fd -e pdf; fd -x rm'
         $'\e[36mSearch\e[0m      │ fzf                  | Search & Nav | General-purpose interactive fuzzy finder.       | fzf; fzf --preview \'bat {}\''
         $'\e[36mSearch\e[0m      │ zoxide (z)           | Search & Nav | Smart cd replacement that remembers folders.    | z folder; z -; zoxide query -l'
 
-        $'\e[1;92m─── 📂 FILE MANAGEMENT & VIEWING ───────────────────────────────\e[0m | SECTION-FILE | | '
+        $'\e[1;92m─── 📂 File Management & Viewing ───────────────────────────────\e[0m | SECTION-FILE | | '
         $'\e[32mFile/View\e[0m   │ bat                  | File Viewer  | Upgraded cat with syntax highlighting.          | bat f.txt; bat -p f.txt'
         $'\e[32mFile/View\e[0m   │ dust                 | File Viewer  | Visual, color-coded recursive disk usage tree.  | dust; dust -d 1'
         $'\e[33mEditor\e[0m      │ micro                | Editors      | Modern and intuitive terminal text editor.      | micro f.txt; micro +10 f.txt'
         $'\e[33mEditor\e[0m      │ helix (hx)           | Editors      | A post-modern modal editor with built-in LSP.   | hx f.txt; hx --tutor'
 
-        $'\e[1;96m─── 📊 MONITORING & PERFORMANCE ───────────────────────────────\e[0m | SECTION-MONITOR | | '
+        $'\e[1;96m─── 📊 Monitoring & Performance ───────────────────────────────\e[0m | SECTION-MONITOR | | '
         $'\e[35mMonitor\e[0m     │ htop / bottom (btm)  | Monitoring   | Graphical interactive system/process monitors.   | htop; btm; btm --basic'
         $'\e[35mMonitor\e[0m     │ procs                | Monitoring   | Human-readable ps with thread tracing.          | procs; procs --watch'
         $'\e[35mMonitor\e[0m     │ fastfetch            | Monitoring   | Fast, active system information dashboard.       | fastfetch'
 
-        $'\e[1;94m─── 🐳 DOCKER & CONTAINER ECOSYSTEM ────────────────────────────\e[0m | SECTION-DOCKER | | '
+        $'\e[1;94m─── 🐳 Docker & Container Ecosystem ────────────────────────────\e[0m | SECTION-DOCKER | | '
         $'\e[34mDocker\e[0m      │ lazydocker           | Docker/Infra | Interactive TUI dashboard for Docker clusters.  | lazydocker'
         $'\e[34mDocker\e[0m      │ dive                 | Docker/Infra | Layer-by-layer docker image analyzer.           | dive image'
 
-        $'\e[1;91m─── 🌐 NETWORK & API UTILITIES ─────────────────────────────────\e[0m | SECTION-NETWORK | | '
+        $'\e[1;91m─── 🌐 Network & API Utilities ─────────────────────────────────\e[0m | SECTION-NETWORK | | '
         $'\e[31mNetwork\e[0m     │ httpie (http)        | Network/API  | User-friendly curl alternative with JSON style. | http google.com; http POST :3000/api'
         $'\e[31mNetwork\e[0m     │ xh                   | Network/API  | Blazing fast Rust clone of httpie.             | xh google.com; xh GET :3000'
         $'\e[31mNetwork\e[0m     │ trippy (trip)        | Network/API  | Combined interactive ping and traceroute UI.    | trip google.com; trip -i eth0'
         $'\e[31mNetwork\e[0m     │ doggo                | Network/API  | Modern DNS client (dig alternate) with DoH/DoT. | doggo google.com; doggo @1.1.1.1 google.com'
         $'\e[31mNetwork\e[0m     │ bandwhich            | Network/API  | Real-time utility tracking bandwidth per PID.   | sudo bandwhich'
 
-        $'\e[1;97m─── 📋 CODE HELPERS & DATA STREAMS ─────────────────────────────\e[0m | SECTION-DATA | | '
+        $'\e[1;97m─── 📋 Code Helpers & Data Streams ─────────────────────────────\e[0m | SECTION-DATA | | '
         $'\e[37mData/Dev\e[0m    │ jq / yq              | Data Stream  | Powerful processors for JSON/YAML streams.      | cat f.json | jq \'.\'; yq \'.key\' f.yml'
         $'\e[37mData/Dev\e[0m    │ delta                | Data Stream  | Renders crisp side-by-side git diffs.           | git diff | delta; git show | delta'
         $'\e[37mData/Dev\e[0m    │ tldr                 | Data Stream  | Quick, real-world example cheatsheets.          | tldr tar; tldr find'
 
-        $'\e[1;33m─── 💼 WORKSPACE & SECURITY ────────────────────────────────────\e[0m | SECTION-WORKSPACE | | '
+        $'\e[1;33m─── 💼 Workspace & Security ────────────────────────────────────\e[0m | SECTION-WORKSPACE | | '
         $'\e[96mWorkspace\e[0m   │ zellij               | Workspace    | Feature-rich terminal multiplexer (tmux alt).   | zellij'
         $'\e[96mWorkspace\e[0m   │ lazygit              | Workspace    | Visual terminal UI for git operations.          | lazygit'
         $'\e[91mSecurity\e[0m    │ age                  | Security     | Simple, modern file encryption tool.            | age -p f.txt > f.age; age -d f.age'
 
-        $'\e[1;95m─── ⚡ CUSTOM WORKFLOW COMBINATIONS ────────────────────────────\e[0m | SECTION-WORKFLOW | | '
+        $'\e[1;95m─── ⚡ Custom Workflow Combinations ────────────────────────────\e[0m | SECTION-WORKFLOW | | '
         $'\e[95mWorkflow\e[0m    │ fe                   | Custom Combo | Interactive File Opener (fd+fzf+bat+micro).     | fe'
         $'\e[95mWorkflow\e[0m    │ rgf                  | Custom Combo | Interactive Code Grepper (rg+fzf+bat+micro).    | rgf'
         $'\e[95mWorkflow\e[0m    │ glf                  | Custom Combo | Interactive Git Log Viewer (git+delta+fzf).     | glf'
@@ -145,42 +145,42 @@ arsenal() {
                 echo -e \"\n  \x1b[1;95m📂 Category: \${category#SECTION-}\x1b[0m\n\"
                 case \"\$category\" in
                     SECTION-SEARCH)
-                        echo -e \"  \x1b[1;37m🔍 SEARCH & NAVIGATION\x1b[0m\"
+                        echo -e \"  \x1b[1;37m🔍 Search & Navigation\x1b[0m\"
                         echo -e \"  Speedy file searching (ripgrep, fd-find), interactive filtering\"
                         echo -e \"  (fzf), and intelligent directory jumps (zoxide).\"
                         ;;
                     SECTION-FILE)
-                        echo -e \"  \x1b[1;37m📂 FILE MANAGEMENT & VIEWING\x1b[0m\"
+                        echo -e \"  \x1b[1;37m📂 File Management & Viewing\x1b[0m\"
                         echo -e \"  Syntax-highlighted views (bat), space analysis (dust),\"
                         echo -e \"  and advanced text editors (micro, helix).\"
                         ;;
                     SECTION-MONITOR)
-                        echo -e \"  \x1b[1;37m📊 MONITORING & PERFORMANCE\x1b[0m\"
+                        echo -e \"  \x1b[1;37m📊 Monitoring & Performance\x1b[0m\"
                         echo -e \"  Interactive resource dashboards (htop, bottom), process logs\"
                         echo -e \"  analyzer (procs), and active system specifications (fastfetch).\"
                         ;;
                     SECTION-DOCKER)
-                        echo -e \"  \x1b[1;37m🐳 DOCKER & CONTAINER ECOSYSTEM\x1b[0m\"
+                        echo -e \"  \x1b[1;37m🐳 Docker & Container Ecosystem\x1b[0m\"
                         echo -e \"  Comprehensive container TUI dashboards (lazydocker) and\"
                         echo -e \"  detailed image layers analyzer (dive).\"
                         ;;
                     SECTION-NETWORK)
-                        echo -e \"  \x1b[1;37m🌐 NETWORK & API UTILITIES\x1b[0m\"
+                        echo -e \"  \x1b[1;37m🌐 Network & API Utilities\x1b[0m\"
                         echo -e \"  Intuitive REST testing (httpie, xh), interactive network pathing\"
                         echo -e \"  (trippy), DNS records query (doggo), and bandwidth tracing (bandwhich).\"
                         ;;
                     SECTION-DATA)
-                        echo -e \"  \x1b[1;37m📋 CODE HELPERS & DATA STREAMS\x1b[0m\"
+                        echo -e \"  \x1b[1;37m📋 Code Helpers & Data Streams\x1b[0m\"
                         echo -e \"  Interactive JSON/YAML queries (jq/yq), syntax-colored diffs\"
                         echo -e \"  (delta), and concise terminal cheatsheets (tldr).\"
                         ;;
                     SECTION-WORKSPACE)
-                        echo -e \"  \x1b[1;37m💼 WORKSPACE & SECURITY\x1b[0m\"
+                        echo -e \"  \x1b[1;37m💼 Workspace & Security\x1b[0m\"
                         echo -e \"  Productive workspaces (zellij), terminal git manager (lazygit),\"
                         echo -e \"  and secure modern file encryption (age).\"
                         ;;
                     SECTION-WORKFLOW)
-                        echo -e \"  \x1b[1;37m⚡ CUSTOM WORKFLOW COMBINATIONS\x1b[0m\"
+                        echo -e \"  \x1b[1;37m⚡ Custom Workflow Combinations\x1b[0m\"
                         echo -e \"  Synergistic commands combining search, filters, editors, and docker\"
                         echo -e \"  to automate common administration procedures.\"
                         ;;
@@ -239,13 +239,18 @@ Once installed, simply type `arsenal` in your terminal to open the interactive t
 | `nano` / `vim` | **`micro`** | Intuitive, mouse-supported editor with familiar keybindings (Ctrl-S, Ctrl-C). |
 | `vim` / `neovim` | **`helix` (`hx`)** | Post-modern modal editor with batteries-included LSP and tree-sitter. |
 
-### ⚙️ System Monitoring & Containers
+### 📊 Monitoring & Performance
 
 | Legacy Tool | Modern Equivalent | Key Advantage |
 | :--- | :--- | :--- |
 | `top` | **`htop` / `bottom`** | Colorful, keyboard-interactive task and process graphs. |
 | `ps` | **`procs`** | Multi-colored columns with automated thread hierarchy tracking. |
 | *None* | **`fastfetch`** | Ultra-fast system info fetch tool with high customizability. |
+
+### 🐳 Docker & Container Ecosystem
+
+| Legacy Tool | Modern Equivalent | Key Advantage |
+| :--- | :--- | :--- |
 | `docker` | **`lazydocker`** | Fully mouse-and-keyboard UI dashboard for container clusters and log tracking. |
 | *None* | **`dive`** | Layer-by-layer file overhead analyzer for cleaning up docker images. |
 
@@ -265,7 +270,27 @@ Once installed, simply type `arsenal` in your terminal to open the interactive t
 | `sed` / `awk` | **`jq` / `yq`** | Specialized processing engines built to slice, filter, and rewrite JSON/YAML streams. |
 | `git diff` | **`delta`** | Renders crisp side-by-side modifications with granular character highlights. |
 | `man` | **`tldr`** | Drops bloated instructional textbooks for immediate, practical command examples. |
-| *None* | **`zellij`** | A terminal workspace with "batteries included" (layout, tabs, etc.) |
+
+### 💼 Workspace & Security
+
+| Legacy Tool | Modern Equivalent | Key Advantage |
+| :--- | :--- | :--- |
+| *None* | **`zellij`** | A modern, terminal workspace with layout and multiplexing options. |
+| `git` | **`lazygit`** | Simple terminal UI for git commands, branches, and stashes. |
+| `gpg` | **`age`** | Simple, modern, and secure file encryption tool. |
+
+### ⚡ Custom Workflow Combinations
+
+| Command | Primary Components | Key Advantage / Workflow |
+| :--- | :--- | :--- |
+| **`fe`** | `fd` + `fzf` + `bat` + `micro` | Interactive file opener with live syntax preview. |
+| **`rgf`** | `rg` + `fzf` + `bat` + `micro` | Interactive code searcher opening editor at target line. |
+| **`glf`** | `git` + `fzf` + `delta` | Interactive git log viewer with syntax-colored side-by-side diff. |
+| **`pkill-ui`** | `procs` + `fzf` | Interactive process search and safe kill manager. |
+| **`clean-files`** | `fd` + `fzf` + `rm` | Safe recursive file deletion grid with tab multi-select. |
+| **`dock-inspect`** | `docker` + `fzf` + `jq` + `bat` | Fuzzy inspect Docker containers to colorized, pretty JSON. |
+| **`resolve-ips`** | `doggo` + `jq` + `grep` | Direct DNS resolution query filtering to clean IP output. |
+
 
 ---
 
