@@ -82,7 +82,7 @@ eval "$(zoxide init ${SHELL##*/})"
 # ==============================================================================
 # 🧰 CLI ARSENAL INTERACTIVE CHEATSHEET
 # ==============================================================================
-arsenal() {
+toolkit() {
     local matrix=(
         $'\e[1;95m─── 🔍 Search & Navigation ─────────────────────────────────────\e[0m | SECTION-SEARCH | | '
         $'\e[36mSearch\e[0m      │ ripgrep (rg)         | Search & Nav | Faster grep replacement. Respects .gitignore. | rg \'pat\'; rg -i \'pat\'; rg -t py \'pat\''
